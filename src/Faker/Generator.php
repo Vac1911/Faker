@@ -661,13 +661,16 @@ class Generator
      * Replaces tokens ('{{ tokenName }}') with the result from the token method call
      *
      * @param string $string String that needs to bet parsed
+     * @param array  $values Values to be filled in if they exist
      *
      * @return string
      */
-    public function parse($string)
+    public function parse($string, $values = [])
     {
-        $callback = function ($matches) {
-            return $this->format($matches[1]);
+        $callback = function ($matches) use ($values) {
+            if(array_key_exists($matches[1], $values))
+                return $values[$matches[1]];
+            return $this->format($matches[1], $values);
         };
 
         return preg_replace_callback('/\{\{\s?(\w+)\s?\}\}/u', $callback, $string);

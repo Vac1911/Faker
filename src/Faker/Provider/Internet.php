@@ -40,45 +40,53 @@ class Internet extends Base
     ];
 
     /**
+     * @param ?string $firstName name used to generate email username
+     * @param ?string $lastName name used to generate email username
      * @example 'jdoe@acme.biz'
      *
      * @return string
      */
-    public function email()
+    public function email($firstName = null, $lastName = null)
     {
         $format = static::randomElement(static::$emailFormats);
-
-        return $this->generator->parse($format);
+        $userName = $this->userName($firstName, $lastName);
+        return $this->generator->parse($format, compact('userName'));
     }
 
     /**
+     * @param ?string $firstName name used to generate email username
+     * @param ?string $lastName name used to generate email username
      * @example 'jdoe@example.com'
      *
      * @return string
      */
-    final public function safeEmail()
+    final public function safeEmail($firstName = null, $lastName = null)
     {
-        return preg_replace('/\s/u', '', $this->userName() . '@' . static::safeEmailDomain());
+        return preg_replace('/\s/u', '', $this->userName($firstName, $lastName) . '@' . static::safeEmailDomain());
     }
 
     /**
+     * @param ?string $firstName name used to generate email username
+     * @param ?string $lastName name used to generate email username
      * @example 'jdoe@gmail.com'
      *
      * @return string
      */
-    public function freeEmail()
+    public function freeEmail($firstName = null, $lastName = null)
     {
-        return preg_replace('/\s/u', '', $this->userName() . '@' . static::freeEmailDomain());
+        return preg_replace('/\s/u', '', $this->userName($firstName, $lastName) . '@' . static::freeEmailDomain());
     }
 
     /**
+     * @param ?string $firstName name used to generate email username
+     * @param ?string $lastName name used to generate email username
      * @example 'jdoe@dawson.com'
      *
      * @return string
      */
-    public function companyEmail()
+    public function companyEmail($firstName = null, $lastName = null)
     {
-        return preg_replace('/\s/u', '', $this->userName() . '@' . $this->domainName());
+        return preg_replace('/\s/u', '', $this->userName($firstName, $lastName) . '@' . $this->domainName());
     }
 
     /**
@@ -108,14 +116,16 @@ class Internet extends Base
     }
 
     /**
+     * @param ?string $firstName name used to generate email username
+     * @param ?string $lastName name used to generate email username
      * @example 'jdoe'
      *
      * @return string
      */
-    public function userName()
+    public function userName($firstName = null, $lastName = null)
     {
         $format = static::randomElement(static::$userNameFormats);
-        $username = static::bothify($this->generator->parse($format));
+        $username = static::bothify($this->generator->parse($format, compact('firstName', 'lastName')));
 
         $username = strtolower(static::transliterate($username));
 
