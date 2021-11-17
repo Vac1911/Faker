@@ -668,8 +668,10 @@ class Generator
     public function parse($string, $values = [])
     {
         $callback = function ($matches) use ($values) {
-            if(array_key_exists($matches[1], $values))
+            if (array_key_exists($matches[1], $values)) {
                 return $values[$matches[1]];
+            }
+
             return $this->format($matches[1], $values);
         };
 

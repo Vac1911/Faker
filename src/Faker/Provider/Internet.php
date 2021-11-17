@@ -41,7 +41,8 @@ class Internet extends Base
 
     /**
      * @param ?string $firstName name used to generate email username
-     * @param ?string $lastName name used to generate email username
+     * @param ?string $lastName  name used to generate email username
+     *
      * @example 'jdoe@acme.biz'
      *
      * @return string
@@ -50,12 +51,14 @@ class Internet extends Base
     {
         $format = static::randomElement(static::$emailFormats);
         $userName = $this->userName($firstName, $lastName);
+
         return $this->generator->parse($format, compact('userName'));
     }
 
     /**
      * @param ?string $firstName name used to generate email username
-     * @param ?string $lastName name used to generate email username
+     * @param ?string $lastName  name used to generate email username
+     *
      * @example 'jdoe@example.com'
      *
      * @return string
@@ -67,7 +70,8 @@ class Internet extends Base
 
     /**
      * @param ?string $firstName name used to generate email username
-     * @param ?string $lastName name used to generate email username
+     * @param ?string $lastName  name used to generate email username
+     *
      * @example 'jdoe@gmail.com'
      *
      * @return string
@@ -79,7 +83,8 @@ class Internet extends Base
 
     /**
      * @param ?string $firstName name used to generate email username
-     * @param ?string $lastName name used to generate email username
+     * @param ?string $lastName  name used to generate email username
+     *
      * @example 'jdoe@dawson.com'
      *
      * @return string
@@ -117,7 +122,8 @@ class Internet extends Base
 
     /**
      * @param ?string $firstName name used to generate email username
-     * @param ?string $lastName name used to generate email username
+     * @param ?string $lastName  name used to generate email username
+     *
      * @example 'jdoe'
      *
      * @return string
